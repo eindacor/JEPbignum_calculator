@@ -275,6 +275,9 @@ int main(int argc, char** argv)
 	{
 		string entered = getEntered();
 
+		if (jep::checkWord(entered, 0, "exit"))
+			return 0;
+
 		if (baseChange(entered, user_settings))
 		{
 			printShellLine();
@@ -297,12 +300,23 @@ int main(int argc, char** argv)
 			continue;
 		}
 			
-		jep::solution answer = jep::solve(entered, previous, user_settings);
+		try
+		{
+			jep::solution temp_answer = jep::solve(entered, previous, user_settings);
+			answer = temp_answer;
+		}
+		
+		catch (jep::error_handler eh)
+		{
+			printShellLine();
+			changeColors(RED_ON_BLACK);
+			cout << eh.getErrorReport() << endl;
+		}
 
 		if (answer.getError())
 		{
 			printShellLine();
-			changeColors(DARK_RED_ON_BLACK);
+			changeColors(RED_ON_BLACK);
 			cout << "INVALID ENTRY" << endl;
 			printShellLine();
 			cout << endl;
