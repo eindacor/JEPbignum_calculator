@@ -309,7 +309,13 @@ int main(int argc, char** argv)
 			cout << endl;
 			printShellLine();
 			changeColors(GREEN_ON_BLACK);
-			cout << "\tswitching from base " << previous.getBase() << " to base " << user_settings.getBase() << endl;
+			cout << "\tswitching from base ";
+			changeColors(PURPLE_ON_BLACK); 
+			cout << previous.getBase();
+			changeColors(GREEN_ON_BLACK);
+			cout << " to base ";
+			changeColors(WHITE_ON_BLACK);
+			cout << user_settings.getBase() << endl;
 			printShellLine();
 			changeColors(PURPLE_ON_BLACK);
 			cout << previous.getNumberString(true, false, DEFAULT_DECIMAL_PLACES);
@@ -335,14 +341,14 @@ int main(int argc, char** argv)
 		{
 			printShellLine();
 			changeColors(RED_ON_BLACK);
-			cout << eh.getErrorReport() << endl;
+			cout << '\t' << eh.getErrorReport() << endl;
 		}
 
 		if (answer.getError())
 		{
 			printShellLine();
 			changeColors(RED_ON_BLACK);
-			cout << "INVALID ENTRY" << endl;
+			cout << "\tINVALID ENTRY" << endl;
 			printShellLine();
 			cout << endl;
 		}
