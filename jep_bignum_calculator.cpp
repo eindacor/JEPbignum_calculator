@@ -223,8 +223,13 @@ void changeColors(WORD colors)
 
 void printShellLine()
 {
+	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+
 	changeColors(GRAY_ON_BLACK);
 	cout << "> ";
+	changeColors(csbi.wAttributes);
 }
 
 string getEntered()
@@ -277,6 +282,26 @@ int main(int argc, char** argv)
 
 		if (jep::checkWord(entered, 0, "exit"))
 			return 0;
+
+		if (jep::checkWord(entered, 0, "details"))
+		{
+			printShellLine();
+			cout << endl;
+			printShellLine();
+			changeColors(BLUE_ON_BLACK);
+			cout << "\t-----Details-----" << endl;
+			printShellLine();
+			cout << "\tbase: " << previous.getBase() << endl;
+			printShellLine();
+			cout << "\tdigit range: " << previous.getDigitRange() << endl;
+			printShellLine();
+			cout << "\tleft of decimal: " << previous.getDigitRange() - previous.getDecimalCount() << endl;
+			printShellLine();
+			cout << "\tright of decimal: " << previous.getDecimalCount() << endl;
+			printShellLine();
+			cout << endl;
+			continue;
+		}
 
 		if (baseChange(entered, user_settings))
 		{
